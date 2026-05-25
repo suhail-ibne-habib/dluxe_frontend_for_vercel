@@ -52,6 +52,12 @@ export default function LocationsPage() {
     return str?.startsWith('/') || str?.startsWith('http');
   };
 
+  const cleanLink = (link) => {
+    if (!link) return '';
+    if (link.includes('skyvipservices') || link.includes('skyview')) return '';
+    return link;
+  };
+
   // Filter locations based on search query
   const filteredLocations = staticLocations.map(loc => {
     const matchedAirports = loc.airports.filter(a => 
@@ -157,7 +163,7 @@ export default function LocationsPage() {
                   {country.airports.map((airport, aIdx) => (
                     <li key={aIdx}>
                       <a 
-                        href={airport.link || `/booking?airport=${encodeURIComponent(airport.name)}`}
+                        href={cleanLink(airport.link) || `/booking?airport=${encodeURIComponent(airport.name)}`}
                         className="group flex flex-col items-start hover:bg-gray-50 p-2 -mx-2 rounded-lg transition-colors"
                       >
                         <span className="text-sm font-semibold text-gray-700 group-hover:text-[#ea580c] transition-colors line-clamp-2">

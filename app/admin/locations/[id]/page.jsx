@@ -27,6 +27,12 @@ export default function LocationViewPage() {
 
   const isUrl = loc.flagIcon?.startsWith('/') || loc.flagIcon?.startsWith('http');
 
+  const cleanLink = (link) => {
+    if (!link) return '';
+    if (link.includes('skyvipservices') || link.includes('skyview')) return '';
+    return link;
+  };
+
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-6 animate-in fade-in duration-300">
       <div className="flex items-center gap-4 border-b border-gray-100 pb-6">
@@ -57,8 +63,8 @@ export default function LocationViewPage() {
                   <div className="mb-5 pb-5 border-b border-gray-100">
                     <h3 className="text-2xl font-black text-gray-900 leading-tight flex items-center justify-between">
                        {a.name}
-                       {a.link && (
-                          <a href={a.link} target="_blank" rel="noreferrer" title="Booking Link">
+                       {cleanLink(a.link) && (
+                          <a href={cleanLink(a.link)} target="_blank" rel="noreferrer" title="Booking Link">
                             <svg className="w-5 h-5 text-gray-300 hover:text-[#ea580c] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                           </a>
                        )}

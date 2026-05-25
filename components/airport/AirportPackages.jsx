@@ -22,6 +22,12 @@ export default function AirportPackages({ airportId, airportName }) {
           let config = null;
           const currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
 
+          const cleanLink = (link) => {
+            if (!link) return '';
+            if (link.includes('skyvipservices') || link.includes('skyview')) return '';
+            return link;
+          };
+
           // Find the airport config to check for excluded packages and custom pricing
           if (airportId) {
             for (const loc of allLocs) {
@@ -35,7 +41,10 @@ export default function AirportPackages({ airportId, airportName }) {
             // First try to find by explicit link (highly reliable connection with the dashboard)
             if (currentPath) {
               for (const loc of allLocs) {
-                const found = loc.airports?.find(a => a.link && (a.link === currentPath || a.link === currentPath.replace(/\/$/, '')));
+                const found = loc.airports?.find(a => {
+                  const cLink = cleanLink(a.link);
+                  return cLink && (cLink === currentPath || cLink === currentPath.replace(/\/$/, ''));
+                });
                 if (found) {
                   config = found;
                   break;
