@@ -83,26 +83,15 @@ export default function LocationViewPage() {
                   )}
 
                   {/* Link Info */}
-                  <div className="mb-5 space-y-3 text-xs bg-gray-50/70 p-4 rounded-xl border border-gray-100/80 shadow-sm">
-                     <div className="flex flex-col gap-1">
-                        <span className="text-[9px] font-black uppercase tracking-widest text-gray-400">Database Link URL</span>
-                        <span className="font-mono text-gray-600 break-all">{a.link || <span className="italic text-gray-400">None configured</span>}</span>
+                  {a.link && (
+                     <div className="mb-5 text-xs bg-gray-50/70 p-4 rounded-xl border border-gray-100/80 shadow-sm flex flex-col gap-1">
+                        <span className="text-[9px] font-black uppercase tracking-widest text-gray-400">Page Link</span>
+                        <a href={a.link} target="_blank" rel="noreferrer" className="font-mono text-gray-600 hover:text-[#ea580c] transition-colors break-all flex items-center gap-1.5">
+                           {a.link}
+                           <svg className="w-3.5 h-3.5 shrink-0 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                        </a>
                      </div>
-                     <div className="flex flex-col gap-1 pt-2 border-t border-gray-100">
-                        <span className="text-[9px] font-black uppercase tracking-widest text-gray-400">Local Landing Page Preview</span>
-                        {(() => {
-                          const localPath = a.link && a.link.match(/\/airport\/([a-zA-Z0-9-_]+)/) 
-                            ? `/airport/${a.link.match(/\/airport\/([a-zA-Z0-9-_]+)/)[1]}` 
-                            : `/booking?airport=${encodeURIComponent(a.name)}`;
-                          return (
-                            <Link href={localPath} target="_blank" className="text-blue-600 font-bold hover:underline flex items-center gap-1.5 break-all">
-                              {localPath}
-                              <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                            </Link>
-                          );
-                        })()}
-                     </div>
-                  </div>
+                  )}
                   
                   <div className="flex-1">
                      <p className="text-[10px] text-gray-500 uppercase tracking-widest font-black mb-2 flex items-center justify-between">
